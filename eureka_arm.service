@@ -1,0 +1,17 @@
+[Unit]
+Description=Eureka Movement Launch Service
+After=network.target
+
+[Service]
+User=eurekajetson
+WorkingDirectory=/home/eurekajetson
+ExecStartPre=/bin/sleep 10
+ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source /home/eurekajetson/ros2_ws/install/setup.bash && export ROS_DOMAIN_ID=13 && ros2 launch eureka_arm_2 eureka_arm_launch.py'
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/home/eurekajetson/servicelogs/eureka_movement.log
+StandardError=append:/home/eurekajetson/servicelogs/eureka_movement_error.log
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target
