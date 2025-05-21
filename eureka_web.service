@@ -1,17 +1,21 @@
 [Unit]
 Description=Eureka Movement Launch Service
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=eurekajetson
 WorkingDirectory=/home/eurekajetson
 ExecStartPre=/bin/sleep 10
-ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source /home/eurekajetson/ros2_ws/install/setup.bash && export ROS_DOMAIN_ID=13 && ros2 launch turtlebro_web web_server.xml'
+ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source /home/eurekajetson/ros2_ws/install/setup.bash && export ROS_DOMAIN_ID=13 && export DISPLAY=:0 && export NVIDIA_DRIVER_CAPABILITIES=all && ros2 launch turtlebro_web web_server.xml'
 Restart=on-failure
 RestartSec=5
 StandardOutput=append:/home/eurekajetson/servicelogs/eureka_web.log
 StandardError=append:/home/eurekajetson/servicelogs/eureka_web_error.log
 Environment="PYTHONUNBUFFERED=1"
+KillMode=control-group
+KillSignal=SIGINT
+TimeoutStopSec=10
 
 [Install]
 WantedBy=multi-user.target

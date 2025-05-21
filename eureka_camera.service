@@ -7,7 +7,7 @@ After=network.target
 User=eurekajetson
 WorkingDirectory=/home/eurekajetson
 ExecStartPre=/bin/sleep 10
-ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source /home/eurekajetson/ros2_ws/install/setup.bash && export ROS_DOMAIN_ID=13 && ros2 launch eureka_camera_2 eureka_camera_launch.py'
+ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source /home/eurekajetson/ros2_ws/install/setup.bash && export ROS_DOMAIN_ID=13 && sleep 5 && ros2 launch eureka_camera_2 eureka_camera_launch.py'
 Restart=on-failure
 RestartSec=5
 StandardOutput=append:/home/eurekajetson/servicelogs/eureka_camera.log
